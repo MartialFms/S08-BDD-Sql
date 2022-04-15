@@ -21,33 +21,12 @@ public class TestJdbc {
 
 	public static void main(String[] args) throws Exception {
 		
-//		user = new User(1,"root", "fms2022");				// temp value
+//		user = new User(1,"root", "fms2022");			// temp value
 		
 		userLogin(user);
-		Connection connection = BddConnection.getConnection(user);		//methode de connection
-		selectMenu();													// menu admin
+		BddConnection.getConnection(user);				//methode de connection
+		selectMenu();									// menu admin
 		
-		
-//methodes
-
-			String strSql = "DELETE IdArticle=13 FROM T_ARTICLES";		// commande sql
-			try (Statement statement = connection.createStatement()) {
-				try (ResultSet resultSet = statement.executeQuery(strSql)) {
-					while (resultSet.next()) {
-						int rsIdUser = resultSet.getInt(1);
-						String rsDescription = resultSet.getNString(2);
-						String rsBrand = resultSet.getNString(3);
-						double rsPrice = resultSet.getDouble(4);
-						articles.add((new Article(rsIdUser, rsDescription, rsBrand, rsPrice)));
-					}
-				}
-			
-			for (Article a : articles)
-				System.out
-						.println(a.getId() + " - " + a.getDescription() + " - " + a.getBrand() + " - " + a.getPrice());
-		} catch (SQLException e) {
-			e.printStackTrace();
-		}
 	}
 	public static void selectMenu() {
 
