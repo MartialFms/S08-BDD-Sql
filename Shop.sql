@@ -1,13 +1,7 @@
--------------------------------------------------------------------------------------------
--- - Reconstruction de la base de données 												---
--------------------------------------------------------------------------------------------
 DROP DATABASE IF EXISTS Shop;
 CREATE DATABASE Shop;
 USE Shop;
 
--------------------------------------------------------------------------------------------
--- - Construction de la table des articles en vente										---
--------------------------------------------------------------------------------------------
 CREATE TABLE T_Articles (
     IdArticle 			int(4) PRIMARY KEY AUTO_INCREMENT,
     Description 		varchar(30) NOT NULL,
@@ -17,9 +11,9 @@ CREATE TABLE T_Articles (
 	
 INSERT INTO T_Articles (Description, Brand, UnitaryPrice) VALUES ('Souris', 'Logitoch', 65); 
 INSERT INTO T_Articles (Description, Brand, UnitaryPrice) VALUES ('Clavier', 'Microhard', 49.5); 
-INSERT INTO T_Articles (Description, Brand, UnitaryPrice) VALUES ('Système d''exploitation', 'Fenetres Vistouille', 100); 
+INSERT INTO T_Articles (Description, Brand, UnitaryPrice) VALUES ('SystÃ¨me d''exploitation', 'Fenetres Vistouille', 100); 
 INSERT INTO T_Articles (Description, Brand, UnitaryPrice) VALUES ('Tapis souris', 'Chapeau bleu', 5); 
-INSERT INTO T_Articles (Description, Brand, UnitaryPrice) VALUES ('Clé USB 8 To', 'Syno', 65); 
+INSERT INTO T_Articles (Description, Brand, UnitaryPrice) VALUES ('ClÃ© USB 8 To', 'Syno', 65); 
 INSERT INTO T_Articles (Description, Brand, UnitaryPrice) VALUES ('Laptop', 'PH', 1199); 
 INSERT INTO T_Articles (Description, Brand, UnitaryPrice) VALUES ('CD x 500', 'CETME', 250); 
 INSERT INTO T_Articles (Description, Brand, UnitaryPrice) VALUES ('DVD-R x 100', 'CETME', 99); 
@@ -27,8 +21,6 @@ INSERT INTO T_Articles (Description, Brand, UnitaryPrice) VALUES ('DVD+R x 100',
 INSERT INTO T_Articles (Description, Brand, UnitaryPrice) VALUES ('Batterie Laptop', 'PH', 80); 
 INSERT INTO T_Articles (Description, Brand, UnitaryPrice) VALUES ('Casque Audio', 'Syno', 105); 
 INSERT INTO T_Articles (Description, Brand, UnitaryPrice) VALUES ('Webcam', 'Logitoch', 755); 
-
-SELECT * FROM T_Articles;
 
 /*
   *** 1.1 ***
@@ -55,22 +47,21 @@ select * from t_articles ORDER BY Unitaryprice;
   *** 1.10 ***
 select Description from t_articles;
   *** 1.11 ***
-select Brand from t_articles WHERE Unitaryprice>200 ORDER BY UnitaryPrice DESC;		>> ca affiche que Brand en se basant sur des données non visibles au rendu (le prix), par ordre decroissant
+select Brand from t_articles WHERE Unitaryprice>200 ORDER BY UnitaryPrice DESC;		>> ca affiche que Brand en se basant sur des donnÃ©es non visibles au rendu (le prix), par ordre decroissant
   *** 1.12 ***
-CREATE TABLE T_CatName (T_CatName varchar(30) PRIMARY KEY );
-ALTER TABLE T_Articles ADD COLUMN CatName varchar(30);
-ALTER TABLE T_Articles ADD FOREIGN KEY(CatName) REFERENCES T_CatName(CatName);
-select * from t_articles ORDER BY Unitaryprice;
-describe T_CatName;
-INSERT INTO T_CatName (CatName) VALUES ('PC');					>> etc...
-update t_articles set T_Catname=3 where IdArticle=12;
-  *** 1.13 ***
-select * from T_articles where UnitaryPrice<100 OR UnitaryPrice = 5 order by UnitaryPrice;
- */
+*/
+CREATE TABLE T_Category (IdCategory int(4)  PRIMARY KEY AUTO_INCREMENT, CatName varchar(30));
 
--------------------------------------------------------------------------------------------
--- - Construction de la table des utilisateurs									---
--------------------------------------------------------------------------------------------
+ALTER TABLE T_Articles ADD COLUMN CatName varchar(30);
+ALTER TABLE T_Articles ADD FOREIGN KEY(IdCategory) REFERENCES T_Categroy(CatName);
+
+select * from t_articles ORDER BY Unitaryprice;
+describe T_Category;
+INSERT INTO T_Category (CatName) VALUES ('PC');					>> etc...
+update t_articles set T_Catname=3 where IdArticle=12;
+
+
+
 
 CREATE TABLE T_Users (
 	IdUser int(4) PRIMARY KEY AUTO_INCREMENT,
@@ -82,5 +73,4 @@ CREATE TABLE T_Users (
 INSERT INTO T_Users (Login, Password, AdminRight) VALUES ('root', 'fms2022', TRUE); 
 INSERT INTO T_Users (Login, Password, AdminRight) VALUES ('mars', 'der1979', FALSE); 
 
-SELECT * FROM T_Users;
 

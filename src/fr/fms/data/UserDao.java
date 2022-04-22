@@ -1,6 +1,7 @@
 package fr.fms.data;
 
 import java.sql.PreparedStatement;
+import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.ArrayList;
 
@@ -32,7 +33,7 @@ public class UserDao implements Dao<User> {
 		}
 	
 	@Override
-	public void update(User user) throws SQLException {
+	public void update(User user) {
 		try {
 			String query = "UPDATE T_Users SET Password= ? WHERE Login= ?"; 
 			PreparedStatement prepStat = connection.prepareStatement(query);
@@ -64,4 +65,29 @@ public class UserDao implements Dao<User> {
 		prepStat.executeUpdate();
 		return null;
 	}
+	
+	public User checkLog(String userLogin, String userPassword) throws SQLException {
+		try {
+			String chkUser = "SELECT * FROM T_Users WHERE login = ? AND password = ?";
+			
+			PreparedStatement prepStat = Dao.connection.prepareStatement(chkUser);
+			prepStat.setString(1, userLogin);											// ???
+			prepStat.setString(2, userPassword);
+			ResultSet result = prepStat.executeQuery();
+			result.next();  				// result.get
+			System.out.println(result.getString(2));
+		
+			return new User(userLogin, userPassword);
+			
+		} catch (SQLException e) {
+			System.out.print("error");
+			e.printStackTrace();
+			return null;	
+		}
+	
+		
+	}
+	
+	
+	
 }

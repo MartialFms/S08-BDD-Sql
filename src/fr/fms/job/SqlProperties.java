@@ -5,23 +5,18 @@ import java.util.*;
 public class SqlProperties {
    public static void main(String args[]) throws IOException {
       Properties prop = readPropertiesFile("credentials.properties");
-      System.out.println("username: "+ prop.getProperty("username"));
-      System.out.println("password: "+ prop.getProperty("password"));
+      System.out.println("username: "+ prop.getProperty("user"));
+      System.out.println("password: "+ prop.getProperty("pwd"));
    }
-   public static Properties readPropertiesFile(String fileName) throws IOException {
-      FileInputStream fis = null;
+   public static Properties readPropertiesFile(String fileName){
+      FileInputStream fileInput = null;
       Properties prop = null;
       try {
-         fis = new FileInputStream(fileName);
+         fileInput = new FileInputStream(fileName);
          prop = new Properties();
-         prop.load(fis);
-      } catch(FileNotFoundException fnfe) {
-         fnfe.printStackTrace();
-      } catch(IOException ioe) {
-         ioe.printStackTrace();
-      } finally {
-         fis.close();
-      }
+         prop.load(fileInput);
+      } catch(Exception e) {
+      } 
       return prop;
    }
 }
